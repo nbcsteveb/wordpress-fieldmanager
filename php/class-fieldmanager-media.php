@@ -178,8 +178,8 @@ class Fieldmanager_Media extends Fieldmanager_Field {
 			// phpcs:ignore PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket -- baseline
 			$preview .= sprintf( '<div class="fm-file-detail">%1$s<h4>%2$s</h4><span class="fm-file-type">%3$s</span></div>',
 				esc_html( $file_label ),
-				wp_get_attachment_link( $value, $this->preview_size, true, true, $attachment->post_title ),
-				esc_html( $attachment->post_mime_type )
+				wp_get_attachment_link( $value, $this->preview_size, true, true, $attachment?->post_title ?? '' ),
+				esc_html( $attachment?->post_mime_type ?? '' )
 			);
 
 			$button_string = '<a href="#" class="%1$s"><span class="screen-reader-text">%2$s</span></a>';
