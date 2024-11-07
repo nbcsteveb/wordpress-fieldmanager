@@ -15,6 +15,8 @@ jobs:
       # Step 1: Checkout the forked repository code
       - name: Checkout forked repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # Step 2: Set up Git for the workflow
       - name: Configure Git
