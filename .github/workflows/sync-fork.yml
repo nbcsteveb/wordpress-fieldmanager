@@ -1,0 +1,41 @@
+name: Fieldmanager Sync Fork with Origin
+
+# Schedule to run the sync job Daily
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight (UTC)
+  workflow_dispatch: # Allows for manual triggering of the workflow from the GitHub Actions page
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # Step 1: Checkout the forked repository code
+      - name: Checkout forked repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Git for the workflow
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Step 3: Add the upstream repository (original repository you want to sync with)
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/alleyinteractive/wordpress-fieldmanager.git
+
+      # Step 4: Fetch the latest changes from the upstream repository
+      - name: Fetch upstream changes
+        run: git fetch --all
+
+      # Step 5: Merge the changes from upstream into your fork's main branch
+      - name: Merge upstream changes
+        run: |
+          git pull --rebase upstream main
+
+      # Step 6: Push the merged changes back to your forked repository on GitHub
+      - name: Push changes to fork
+        run: |
+          git push --force
