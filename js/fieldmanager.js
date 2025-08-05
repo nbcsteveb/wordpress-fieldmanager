@@ -269,7 +269,11 @@ var fm_init = function () {
 				val = '';
 			}
 		} else {
-			val = trigger.val().split( ',' );
+			if ( typeof trigger.val() === 'undefined' || trigger.val() === null ) {
+				val = trigger.find('option[disabled]:selected').val().split( ',' );
+			} else {
+				val = trigger.val().split( ',' );
+			}
 		}
 		trigger.addClass( 'display-trigger' );
 		if ( ! match_value( values, val ) ) {
